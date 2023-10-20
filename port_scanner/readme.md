@@ -24,8 +24,20 @@ This port scanner is a simple yet powerful tool written in Bash to help you iden
 - `OPTION`: (Optional) Specify as `open` for scanning open ports, `closed` for closed ports. Leave blank to scan for both.
 
 **Example**:
+
+Only open ports
 ```bash
 ./portscanner.sh 192.168.1.1 1 1000 open
+```
+
+Only closed ports
+```bash
+./portscanner.sh 192.168.1.1 1 1000 closed
+```
+
+All ports
+```bash
+./portscanner.sh 192.168.1.1 1 1000
 ```
 
 This will scan the IP `192.168.1.1` from port `1` to `1000` for open ports.
