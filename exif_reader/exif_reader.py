@@ -31,14 +31,17 @@ def handle_exif_data(file_path, action):
 
 def handle_pdf_metadata(file_path, action):
     try:
-        with open(file_path, "rb+") as f:
-            pdf = PyPDF2.PdfReader(f)
+        with open(file_path, "rb") as f:
+            pdf_reader = PyPDF2.PdfReader(f)
+            pdf_writer = PyPDF2.PdfWriter()
+            for page in range(len(pdf_reader.pages)):
+                pdf_writer.add_page(pdf_reader.pages[page])
             if action == "remove":
-                pdf.remove_metadata()
-                PyPDF2.PdfWriter().write(f, pdf)  # Save the modified PDF
+                with open(file_path, "wb") as output_pdf:
+                    pdf_writer.write(output_pdf)
                 print(f"Removed metadata from {os.path.basename(file_path)}")
             else:
-                metadata = pdf.metadata
+                metadata = pdf_reader.metadata
                 if metadata:
                     print(f"Metadata for {os.path.basename(file_path)}:")
                     for key, value in metadata.items():
