@@ -4,57 +4,74 @@ from PIL import Image
 import PyPDF2
 
 
-def print_exif_data(directory):
-    # List all files in the given directory
+def handle_exif_data(file_path, action):
+    try:
+        with Image.open(file_path) as img:
+            if action == "remove":
+                img.save(
+                    file_path, "JPEG", quality=95, exif=b""
+                )  # Saving with empty EXIF data
+                print(f"Removed EXIF data from {os.path.basename(file_path)}")
+            else:
+                exif_data = img._getexif()
+                if exif_data:
+                    print(f"EXIF Data for {os.path.basename(file_path)}:")
+                    for tag_id, value in exif_data.items():
+                        tag = Image.ExifTags.TAGS.get(tag_id, tag_id)
+                        print(f"{tag}: {value}")
+                else:
+                    print(f"No EXIF data available for {os.path.basename(file_path)}")
+    except IOError:
+        print(
+            f"File {os.path.basename(file_path)} is not an image or cannot be opened."
+        )
+    except Exception as e:
+        print(f"An error occurred with {os.path.basename(file_path)}: {e}")
+
+
+def handle_pdf_metadata(file_path, action):
+    try:
+        with open(file_path, "rb+") as f:
+            pdf = PyPDF2.PdfReader(f)
+            if action == "remove":
+                pdf.remove_metadata()
+                PyPDF2.PdfWriter().write(f, pdf)  # Save the modified PDF
+                print(f"Removed metadata from {os.path.basename(file_path)}")
+            else:
+                metadata = pdf.metadata
+                if metadata:
+                    print(f"Metadata for {os.path.basename(file_path)}:")
+                    for key, value in metadata.items():
+                        print(f"{key[1:]}: {value}")
+                else:
+                    print(f"No metadata available for {os.path.basename(file_path)}")
+    except Exception as e:
+        print(f"An error occurred with {os.path.basename(file_path)}: {e}")
+
+
+def print_or_remove_data(directory, action):
     files = os.listdir(directory)
     for file_name in files:
-        # Construct full file path
         file_path = os.path.join(directory, file_name)
         if file_path.lower().endswith((".png", ".jpg", ".jpeg", ".tif", ".tiff")):
-            try:
-                # Open the image file
-                with Image.open(file_path) as img:
-                    # Get EXIF data
-                    exif_data = img._getexif()
-                    # Print EXIF data if it exists
-                    if exif_data:
-                        print(f"EXIF Data for {file_name}:")
-                        for tag_id, value in exif_data.items():
-                            # Get the tag name, not just numerical ID
-                            tag = Image.ExifTags.TAGS.get(tag_id, tag_id)
-                            print(f"{tag}: {value}")
-                    else:
-                        print(f"No EXIF data available for {file_name}")
-            except IOError:
-                print(f"File {file_name} is not an image or cannot be opened.")
-            except Exception as e:
-                print(f"An error occurred with file {file_name}: {e}")
+            handle_exif_data(file_path, action)
         elif file_path.lower().endswith(".pdf"):
-            try:
-                # Open the PDF file using the updated PdfReader class
-                with open(file_path, "rb") as f:
-                    pdf = PyPDF2.PdfReader(f)
-                    metadata = pdf.document_info
-                    # Print PDF metadata if it exists
-                    if metadata:
-                        print(f"Metadata for {file_name}:")
-                        for key, value in metadata.items():
-                            print(f"{key[1:]}: {value}")
-                    else:
-                        print(f"No metadata available for {file_name}")
-            except Exception as e:
-                print(f"An error occurred with file {file_name}: {e}")
+            handle_pdf_metadata(file_path, action)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Print EXIF data from all images and metadata from PDFs in a directory."
+        description="Handle EXIF data from images and metadata from PDFs in a directory."
     )
     parser.add_argument(
         "directory", type=str, help="Directory containing image and PDF files."
     )
+    parser.add_argument(
+        "--remove", action="store_true", help="Remove metadata instead of displaying it"
+    )
     args = parser.parse_args()
-    print_exif_data(args.directory)
+    action = "remove" if args.remove else "display"
+    print_or_remove_data(args.directory, action)
 
 
 if __name__ == "__main__":
