@@ -1,7 +1,3 @@
-Certainly! Below is a template for a `README.md` for your "security_tools" repository:
-
----
-
 # Security Tools Repository
 
 This repository contains a collection of security-related tools and scripts designed to enhance and ensure computer security. The tools span a range of categories, from network scanning to encryption, ensuring a comprehensive approach to security.
@@ -33,8 +29,10 @@ This repository contains a collection of security-related tools and scripts desi
    ```bash
    cd security_tools
    ```
-3. (Optional) If there are any dependencies or setup steps, list them here.
-
+3. Find all files and apply chmod +x, printing each file whose permissions are changed
+   ```commandline
+   find . -type f -exec chmod +x {} \; -exec echo "Permissions changed for file: {}" \;
+   ```
 
 ## Modules
 
