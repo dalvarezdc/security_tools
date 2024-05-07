@@ -24,5 +24,6 @@ echo "Starting the installation process..."
 install_package "ufw"
 install_package "fail2ban"
 install_package "apparmor"
+install_package "wireguard"
 
 echo "Installation process completed!"

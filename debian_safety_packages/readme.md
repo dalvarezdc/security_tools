@@ -16,6 +16,7 @@ This Bash script facilitates the installation of three commonly used security-re
 1. `ufw` - Uncomplicated Firewall
 2. `fail2ban` - Ban IPs that make too many password failures
 3. `apparmor` - Mandatory Access Control (MAC) system
+4. `wireguard` - VPN service
 
 ## Prerequisites
 
