@@ -9,6 +9,7 @@ FIREFOX_WEBSITES=(
   "https://rugcheck.xyz/"
   "https://gmgn.ai/?chain=sol"
   "https://solanabox.tools/"
+  "https://www.solsniffer.com/"
   "https://t.me/TrenchyBot"
 )
 CHROME_WEBSITES=(
