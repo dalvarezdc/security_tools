@@ -17,10 +17,19 @@ CHROME_WEBSITES=(
   "https://photon-sol.tinyastro.io/en/discover"
   "https://www.sniper.xyz/"
 )
-CONSULTING_WEBSITES=(
-  "https://x.com/nftimm_sol/status/1738497599873880575"
+
+# Declare an associative array
+declare -A my_array=(
+    [orangie_twitter]="https://x.com/nftimm_sol/status/1738497599873880575"
+    [orangie1]="https://www.potionalpha.com/"
 )
+
+# Iterate over the array and print key-value pairs
+for key in "${!my_array[@]}"; do
+    echo "Key: $key, Value: ${my_array[$key]}"
+done
+
 
 firefox "${FIREFOX_WEBSITES[@]}"
 "$BROWSER_EXEC" --new-window --profile-directory="$CHROME_PROFILE" "${CHROME_WEBSITES[@]}" &
-echo "$CONSULTING_WEBSITES"
+
