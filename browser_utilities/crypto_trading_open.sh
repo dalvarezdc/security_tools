@@ -30,6 +30,6 @@ for key in "${!my_array[@]}"; do
 done
 
 
-firefox "${FIREFOX_WEBSITES[@]}"
+firefox "${FIREFOX_WEBSITES[@]}" &
 "$BROWSER_EXEC" --new-window --profile-directory="$CHROME_PROFILE" "${CHROME_WEBSITES[@]}" &
-
+wait
