@@ -3,10 +3,22 @@
 CHROME_PROFILE="Profile 2"
 BROWSER_EXEC="google-chrome"
 
+# Dexscreener parameters
+DEX_TRENDING_SCORE="pairAge"  # "trendingScoreH1"
+DEX_ORDER="asc"  # "desc"
+DEX_CHAIN_ID="solana"
+DEX_MIN_LIQ=20000
+DEX_MIN_MARKET_CAP=65000
+DEX_MAX_MARKET_CAP=11000000
+DEX_MIN_1H_TXNS=100
+DEX_MIN_1H_VOL=8000
+
+# Construct the Dexscreener URL
+DEXSCREENER_URL="https://dexscreener.com/?rankBy=${DEX_TRENDING_SCORE}&order=${DEX_ORDER}&chainIds=${DEX_CHAIN_ID}&minLiq=${DEX_MIN_LIQ}&minMarketCap=${DEX_MIN_MARKET_CAP}&maxMarketCap=${DEX_MAX_MARKET_CAP}&min1HTxns=${DEX_MIN_1H_TXNS}&min1HVol=${DEX_MIN_1H_VOL}"
+
 FIREFOX_WEBSITES=(
-  "https://dexscreener.com/?rankBy=trendingScoreH1&order=desc&chainIds=solana&minLiq=10000&minMarketCap=65000&maxMarketCap=11000000&min1HTxns=200&min1HVol=8000"
+  "$DEXSCREENER_URL"
   "https://gmgn.ai/?chain=sol"
-  "https://app.cielo.finance/feed"
 )
 CHROME_WEBSITES=(
   "https://photon-sol.tinyastro.io/en/discover"
@@ -14,12 +26,13 @@ CHROME_WEBSITES=(
   "https://rugcheck.xyz/"
   "https://www.solsniffer.com/"
   "https://app.tweetscout.io/"
+  "https://app.cielo.finance/feed"
 )
 
 # Declare an associative array
 declare -A my_array=(
     [orangie_twitter]="https://x.com/nftimm_sol/status/1738497599873880575"
-    [orangie_dicord_bot_expensive]="https://www.potionalpha.com/"
+    [orangie_dicord_group_expensive]="https://www.potionalpha.com/"
     [orangie_wallet_tracker]="https://app.cielo.finance/feed"
     [trenchy_bot]="https://t.me/TrenchyBot"
     [solana_tools]="https://solanabox.tools/"
