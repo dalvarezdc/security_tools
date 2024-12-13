@@ -18,7 +18,7 @@ DEXSCREENER_URL="https://dexscreener.com/?rankBy=${DEX_TRENDING_SCORE}&order=${D
 
 FIREFOX_WEBSITES=(
   "$DEXSCREENER_URL"
-  "https://gmgn.ai/?chain=sol"
+  "https://gmgn.ai/discover?chain=sol&tab=all"
 )
 CHROME_WEBSITES=(
   "https://photon-sol.tinyastro.io/en/discover"
@@ -40,6 +40,7 @@ declare -A my_array=(
     [sniper_xyz]="https://www.sniper.xyz/"
     [solana_trading_bot_1]="https://www.solanatracker.io/solana-trading-bot"
     [twitter_check]="https://app.tweetscout.io/"
+    [interesiting_multiple_api_documentations]="https://docs.bitquery.io/docs/examples/Solana/Pump-Fun-API/"
 )
 
 # Iterate over the array and print key-value pairs
