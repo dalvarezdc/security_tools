@@ -1,7 +1,13 @@
 import os
+import sys
 import argparse
 from PIL import Image
 import PyPDF2
+
+# Add parent directory to path to import our modules  
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from utils import logger, sanitize_filename, ValidationError
 
 
 def handle_exif_data(file_path, action):
@@ -13,7 +19,7 @@ def handle_exif_data(file_path, action):
                 )  # Saving with empty EXIF data
                 print(f"Removed EXIF data from {os.path.basename(file_path)}")
             else:
-                exif_data = img._getexif()
+                exif_data = img.getexif()
                 if exif_data:
                     print(f"EXIF Data for {os.path.basename(file_path)}:")
                     for tag_id, value in exif_data.items():
